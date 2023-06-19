@@ -1,19 +1,30 @@
 import React from "react";
+import { Metadata } from "next";
 
-import { Inter } from "next/font/google";
+import { App } from "@components/App";
+import { Layout } from "@components/Layout";
+
+import { ApolloWrapper } from "@lib/apollo-provider";
 
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata = {
-    title: "CabinetJS Client",
+export const metadata: Metadata = {
+    title: {
+        default: "CabinetJS",
+        template: "%s - CabinetJS",
+    },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            <body className={inter.className}>{children}</body>
+            <body>
+                <ApolloWrapper>
+                    <App>
+                        <Layout>{children}</Layout>
+                    </App>
+                </ApolloWrapper>
+            </body>
         </html>
     );
 }
