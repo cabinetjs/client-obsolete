@@ -4,15 +4,20 @@
 
 type Board {
   id: String!
+  uri: String!
   code: String!
   name: String!
   description: String!
   openingPosts: [Post!]!
   posts: [Post!]!
+  postCount: Int!
+  mediaCount: Int!
+  latestAttachment: Attachment
 }
 
 type Attachment {
   id: String!
+  uri: String!
   uid: String!
   url: String!
   thumbnailUrl: String
@@ -24,11 +29,14 @@ type Attachment {
 
 type Post {
   id: String!
+  uri: String!
   parent: String
   no: Int!
   title: String
   content: String
   replies: [Post!]!
+  replyCount: Int!
+  attachmentCount: Int!
   attachments: [Attachment!]!
 }
 
@@ -38,10 +46,16 @@ type DataSource {
   postCount: Int!
   mediaCount: Int!
   latestAttachment: Attachment
+  boards: [Board!]!
+  openingPosts: [Post!]!
+  attachments: [Attachment!]!
 }
 
 type Query {
+  dataSource(name: String!): DataSource
   dataSources: [DataSource!]!
+  post(id: String!): Post
   posts(skip: Int, take: Int): [Post!]!
+  board(id: String!): Board
   boards(skip: Int, take: Int): [Board!]!
 }

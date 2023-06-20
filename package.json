@@ -28,6 +28,7 @@
         "react-dom": "18.2.0",
         "recoil": "^0.7.7",
         "shortid": "^2.2.16",
+        "string-strip-html": "8.5.0",
         "tss-react": "^4.8.6",
         "typescript": "5.1.3"
     },

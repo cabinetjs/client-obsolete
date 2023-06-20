@@ -3,7 +3,6 @@
 import React from "react";
 
 import { Box, ThemeProvider, Typography } from "@mui/material";
-import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
 
 import { Menu, MenuItem } from "@components/Menu";
 
@@ -13,6 +12,7 @@ import { sideBarTheme } from "@styles/theme";
 import { Logo, Root, TitleBar } from "@components/SideBar.styles";
 
 import { useDataSourcesQuery } from "@queries";
+import { buildMenuItems } from "@utils/dataSource";
 
 export interface SideBarProps {}
 
@@ -25,13 +25,7 @@ export function SideBar({}: SideBarProps) {
             return;
         }
 
-        setDataSourceMenuItems(
-            data.dataSources.map(item => ({
-                label: item.id,
-                href: `/data-sources/${item.id}`,
-                icon: <FolderOutlinedIcon />,
-            })),
-        );
+        setDataSourceMenuItems(buildMenuItems(data.dataSources));
     }, [data]);
 
     return (

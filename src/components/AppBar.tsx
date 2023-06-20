@@ -17,7 +17,7 @@ const Root = styled(MuiAppBar)`
 
 export function AppBar({}: AppBarProps) {
     return (
-        <Root position="fixed" elevation={0} color="inherit">
+        <Root position="fixed" elevation={0} color="transparent">
             <Toolbar />
         </Root>
     );

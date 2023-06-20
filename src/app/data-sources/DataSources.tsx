@@ -2,26 +2,30 @@
 
 import React from "react";
 
-import { Grid } from "@mui/material";
+import { Box } from "@mui/material";
 
-import { DataSourceCard } from "@components/DataSourceCard";
+import { Card } from "@components/Card";
 
 import { useDataSourcesSuspenseQuery } from "@queries";
+import { getThumbnailUrl } from "@utils/attachment";
 
 export interface DataSourcesProps {}
 
 export function DataSources({}: DataSourcesProps) {
     const { data } = useDataSourcesSuspenseQuery();
 
-    console.log(data);
-
     return (
-        <Grid container spacing={2}>
+        <Box display="flex" flexWrap="wrap">
             {data.dataSources.map(item => (
-                <Grid item key={item.id} xs={4}>
-                    <DataSourceCard dataSource={item} />
-                </Grid>
+                <Card
+                    key={item.id}
+                    title={item.id}
+                    description={item.type}
+                    postCount={item.postCount}
+                    mediaCount={item.mediaCount}
+                    thumbnail={getThumbnailUrl(item.latestAttachment, 320, 180)}
+                />
             ))}
-        </Grid>
+        </Box>
     );
 }

@@ -1,16 +1,20 @@
 import React from "react";
+import { stripHtml } from "string-strip-html";
 
 import { Box, Skeleton, Tooltip, Typography } from "@mui/material";
 import QuestionAnswerRoundedIcon from "@mui/icons-material/QuestionAnswerRounded";
 import ImageRoundedIcon from "@mui/icons-material/ImageRounded";
 
-import { ImageWrapper, Root, Tag, TagContainer, Thumbnail } from "@components/DataSourceCard.styles";
+import { Description, ImageWrapper, Root, Tag, TagContainer, Thumbnail, Title } from "@components/Card.styles";
 
-import { MinimalDataSourceFragment } from "@queries";
-import { getThumbnailUrl } from "@utils/attachment";
+import { Nullable } from "@utils/types";
 
 export interface NormalCardProps {
-    dataSource: MinimalDataSourceFragment;
+    title: string;
+    description: string;
+    thumbnail?: Nullable<string>;
+    mediaCount: number;
+    postCount: number;
 }
 
 export interface SkeletonCardProps {
@@ -19,29 +23,27 @@ export interface SkeletonCardProps {
 
 export type CardProps = NormalCardProps | SkeletonCardProps;
 
-export function DataSourceCard(props: CardProps) {
-    let id: React.ReactNode;
-    let type: React.ReactNode;
+export function Card(props: CardProps) {
+    let title: React.ReactNode;
+    let description: React.ReactNode;
     let tags: React.ReactNode;
     let thumbnail: React.ReactNode;
 
     if ("skeleton" in props) {
-        id = <Skeleton variant="text" width="100%" animation="wave" />;
-        type = <Skeleton variant="text" width="100%" animation="wave" />;
+        title = <Skeleton variant="text" width="100%" animation="wave" />;
+        description = <Skeleton variant="text" width="100%" animation="wave" />;
         tags = <Skeleton variant="text" width="50%" animation="wave" />;
         thumbnail = <Skeleton variant="rectangular" height="100%" animation="wave" />;
     } else {
-        const { dataSource } = props;
-
-        id = dataSource.id;
-        type = dataSource.type;
+        title = props.title;
+        description = stripHtml(props.description).result;
         tags = (
             <>
                 <Tooltip title="게시글 개수">
                     <Tag>
                         <QuestionAnswerRoundedIcon fontSize="small" color="inherit" />
                         <Typography variant="body2" fontSize="0.8rem" fontWeight={600}>
-                            {dataSource.postCount}
+                            {props.postCount}
                         </Typography>
                     </Tag>
                 </Tooltip>
@@ -49,31 +51,27 @@ export function DataSourceCard(props: CardProps) {
                     <Tag>
                         <ImageRoundedIcon fontSize="small" color="inherit" />
                         <Typography variant="body2" fontSize="0.8rem" fontWeight={600}>
-                            {dataSource.mediaCount}
+                            {props.mediaCount}
                         </Typography>
                     </Tag>
                 </Tooltip>
             </>
         );
 
-        if (dataSource.latestAttachment) {
-            thumbnail = <Thumbnail />;
+        if (props.thumbnail) {
+            thumbnail = <Thumbnail style={{ backgroundImage: `url(${props.thumbnail})` }} />;
         }
-
-        thumbnail = dataSource.latestAttachment ? (
-            <Thumbnail style={{ backgroundImage: `url(${getThumbnailUrl(dataSource.latestAttachment, 320, 180)})` }} />
-        ) : null;
     }
 
     return (
         <Root>
             <ImageWrapper>{thumbnail}</ImageWrapper>
-            <Box p={1.5}>
-                <Typography variant="h6" fontSize="1rem" fontWeight={800} gutterBottom>
-                    {id}
+            <Box p={1.5} flex="1 1 auto">
+                <Typography component={Title} variant="h6" fontSize="1rem" fontWeight={800} gutterBottom>
+                    {title}
                 </Typography>
-                <Typography variant="body1" fontSize="0.85rem">
-                    {type}
+                <Typography component={Description} variant="body1" fontSize="0.85rem">
+                    {description}
                 </Typography>
             </Box>
             <TagContainer>

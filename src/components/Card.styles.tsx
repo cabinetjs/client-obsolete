@@ -3,12 +3,17 @@ import styled from "@emotion/styled";
 import { ButtonBase } from "@mui/material";
 
 export const Root = styled(ButtonBase)`
-    width: 100%;
+    width: ${({ theme }) => theme.spacing(35)};
 
-    margin: 0;
+    margin-right: ${({ theme }) => theme.spacing(2)};
+    margin-bottom: ${({ theme }) => theme.spacing(2)};
+
     border-radius: 4px;
 
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
     text-align: left;
 
     overflow: hidden;
@@ -64,6 +69,8 @@ export const Tag = styled.div`
 
 export const ImageWrapper = styled.div`
     aspect-ratio: 16 / 9;
+
+    overflow: hidden;
 `;
 
 export const Thumbnail = styled.div`
@@ -75,4 +82,18 @@ export const Thumbnail = styled.div`
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+`;
+
+export const Title = styled.h6`
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`;
+
+export const Description = styled.p`
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
 `;

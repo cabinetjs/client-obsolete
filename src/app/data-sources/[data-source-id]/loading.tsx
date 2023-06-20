@@ -2,18 +2,16 @@
 
 import React from "react";
 
-import { Grid } from "@mui/material";
+import { Box } from "@mui/material";
 
 import { Card } from "@components/Card";
 
 export default function Loading() {
     return (
-        <Grid container spacing={2}>
+        <Box display="flex" flexWrap="wrap">
             {Array.from({ length: 6 }).map((_, index) => (
-                <Grid item key={index} xs={4}>
-                    <Card skeleton />
-                </Grid>
+                <Card key={index} skeleton />
             ))}
-        </Grid>
+        </Box>
     );
 }

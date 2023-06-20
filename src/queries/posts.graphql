@@ -1,0 +1,20 @@
+fragment MinimalPost on Post {
+    id
+    no
+    title
+    content
+    attachments {
+        ...MinimalAttachment
+    }
+}
+
+query dataSourceThreads($name: String!) {
+    dataSource(name: $name) {
+        id
+        threads: openingPosts {
+            ...MinimalPost
+            replyCount
+            attachmentCount
+        }
+    }
+}

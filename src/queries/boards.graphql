@@ -1,0 +1,19 @@
+fragment MinimalBoard on Board {
+    id
+    name
+    description
+}
+
+query dataSourceBoards($name: String!) {
+    dataSource(name: $name) {
+        ...MinimalDataSource
+        boards {
+            ...MinimalBoard
+            postCount
+            mediaCount
+            latestAttachment {
+                ...MinimalAttachment
+            }
+        }
+    }
+}
