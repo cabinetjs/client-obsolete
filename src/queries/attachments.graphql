@@ -1,0 +1,4 @@
+fragment MinimalAttachment on Attachment {
+    id
+    uid
+}

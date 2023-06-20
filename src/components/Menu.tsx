@@ -15,6 +15,7 @@ export interface MenuItem {
     icon?: React.ReactNode;
     href?: string;
     activated?(pathname: string): boolean;
+    children?: Omit<MenuItem, "icon">[];
 }
 
 export interface MenuProps {

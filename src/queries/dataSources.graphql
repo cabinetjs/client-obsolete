@@ -1,0 +1,15 @@
+fragment MinimalDataSource on DataSource {
+    id
+    type
+    postCount
+    mediaCount
+    latestAttachment {
+        ...MinimalAttachment
+    }
+}
+
+query dataSources {
+    dataSources {
+        ...MinimalDataSource
+    }
+}

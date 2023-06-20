@@ -1,0 +1,18 @@
+overwrite: true
+schema: "./schema.gql"
+documents: "./src/**/*.graphql"
+generates:
+    src/queries/index.d.ts:
+        plugins:
+            - "typescript-graphql-files-modules"
+    src/queries/index.tsx:
+        plugins:
+            - "typescript"
+            - "typescript-operations"
+            - "typescript-react-apollo"
+            - "./scripts/use-suspense-query"
+        config:
+            withComponent: true
+    ./graphql.schema.json:
+        plugins:
+            - "introspection"
